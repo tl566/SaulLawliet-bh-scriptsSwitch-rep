@@ -4,7 +4,7 @@ cron: "0 1 0 * * *"
 
 使用说明:
 使用 TRAKT_CLIENT_ID, TRAKT_ACCESS_TOKEN 与 TRAKT_REFRESH_TOKEN 访问接口。
-初次授权或 Token 失效无法续期时，请运行: python tools/trakt_auth.py
+初次授权或 Token 失效无法续期时，请运行: uv run tools/trakt_auth.py
 """
 
 import requests
@@ -72,7 +72,6 @@ def main():
         print("未检测到 TRAKT_CLIENT_ID 或 TRAKT_ACCESS_TOKEN，请先运行 python tools/trakt_auth.py 授权")
         return
 
-    # 若配置了代理，自动启用
     session = Session()
     session.headers.update(
         {
@@ -103,7 +102,7 @@ def main():
     shows = resp.json()
     current_show_ids = {str(show.get("show_id")) for show in shows if show.get("show_id") is not None}
 
-    # 如果 show 没有出现在进度列表里，那么从 progress_list 里移除
+    # 如果已记录的影集不再出现在 Trakt 待看列表中（如已看完或删除），则从 progress_list 移除
     removed_shows = []
     for show_id in list(ctx.data["progress_list"].keys()):
         if str(show_id) not in current_show_ids:

@@ -4,8 +4,8 @@ Trakt PKCE 授权脚本
 用于快速完成 Trakt 官方 PKCE 授权，获取 access_token 与 refresh_token。
 
 使用说明:
-1. 在 https://trakt.tv/oauth/applications 确认应用的 Redirect URI 填写为: https://localhost
-2. 运行命令: python tools/trakt_auth.py
+1. 在 https://developer.trakt.tv/apps 确认应用的 Redirect URI 填写为: https://localhost
+2. 运行命令: uv run tools/trakt_auth.py
 """
 
 import base64
